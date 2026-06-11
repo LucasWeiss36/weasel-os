@@ -361,3 +361,9 @@ Append-only log of implementation lessons for future agents working in this repo
 - Change: Removed duplicate package declarations (`bubblewrap`, `obs-studio`, `code-cursor`), moved the clearly personal GUI/editor packages (`lmstudio`, `zed-editor`, `code-cursor`) and the VS Code Home Manager import from `profiles/home/base.nix` into `hosts/lucas/home.nix`, and kept the shared `base` profiles focused on common desktop/system behavior.
 - Pitfall/Root cause: After collapsing the repo to one host, the old layering still left personal apps in `base` and duplicated packages across system and user scopes, which made ownership blurry and upgrades harder to reason about.
 - Verification: `rg -n "code-cursor|bubblewrap|obs-studio|vscode\\.nix|lmstudio|zed-editor" hosts/lucas/config.nix hosts/lucas/home.nix profiles/system/base.nix profiles/home/base.nix`, `alejandra --check profiles/system/base.nix profiles/home/base.nix hosts/lucas/config.nix hosts/lucas/home.nix`, `git diff --check`, `nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath`
+
+### 2026-06-11 (final checkpoint before reboot)
+- Date: 2026-06-11
+- Change: Removed the last two currently-open personal packages from the live `lucas` config (`lmstudio` and `neovide`) and recorded the state as a final checkpoint before reboot/testing.
+- Pitfall/Root cause: `lmstudio` and `neovide` were still hanging around in the current worktree after the earlier pruning; leaving them uncommitted would make the reboot test ambiguous.
+- Verification: `git status --short`, `git diff -- hosts/lucas/home.nix profiles/system/base.nix`, `nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath`

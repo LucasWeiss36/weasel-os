@@ -79,7 +79,6 @@
     pavucontrol
     tree
     spotify
-    neovide
     tuigreet
   ];
 in {

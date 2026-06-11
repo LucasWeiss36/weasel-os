@@ -18,7 +18,6 @@ in {
     packages = [
       pkgs.mcp-nixos
       pkgs.playwright-driver
-      pkgsUnstable.lmstudio
       pkgsUnstable.zed-editor
       pkgsUnstable.code-cursor
     ];
