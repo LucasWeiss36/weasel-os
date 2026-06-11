@@ -50,7 +50,6 @@
     unzip
     unrar
     libnotify
-    ydotool
     duf
     ncdu
     wl-clipboard
@@ -215,8 +214,6 @@ in {
     };
     dconf.enable = true;
     seahorse.enable = true;
-    fuse.userAllowOther = true;
-    mtr.enable = true;
     gnupg.agent.enable = true;
     steam = {
       enable = true;
@@ -291,15 +288,7 @@ in {
     fstrim.enable = true;
     gvfs.enable = true;
     openssh.enable = true;
-    flatpak.enable = true;
-    printing.enable = true;
     gnome.gnome-keyring.enable = true;
-    avahi = {
-      enable = true;
-      nssmdns4 = true;
-      openFirewall = true;
-    };
-    ipp-usb.enable = true;
     syncthing = {
       enable = false;
       user = username;
