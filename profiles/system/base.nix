@@ -280,29 +280,16 @@ in {
         variant = "";
       };
     };
-    smartd = {
-      enable = false;
-      autodetect = true;
-    };
     libinput.enable = true;
     fstrim.enable = true;
     gvfs.enable = true;
-    openssh.enable = true;
     gnome.gnome-keyring.enable = true;
-    syncthing = {
-      enable = false;
-      user = username;
-      dataDir = "/home/${username}";
-      configDir = "/home/${username}/.config/syncthing";
-    };
     pipewire = {
       enable = true;
       alsa.enable = true;
       alsa.support32Bit = true;
       pulse.enable = true;
     };
-    rpcbind.enable = false;
-    nfs.server.enable = false;
     pulseaudio.enable = false;
   };
 
