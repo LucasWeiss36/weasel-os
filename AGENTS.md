@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-This repo is a Nix flake for two NixOS hosts: `nixy-desktop` and `nixy-laptop`.
+This repo is a Nix flake for one active NixOS host: `lucas`.
 - `hosts/<host>/`: host entrypoints (`config.nix`, `home.nix`, `hardware.nix`, `users.nix`, `variables.nix`).
 - `modules/`: reusable NixOS modules (drivers, certs, hardware support, Apple Silicon overlays).
 - `programs/`: Home Manager program configs (Hyprland, Waybar, Neovim, VS Code, etc.).
@@ -14,11 +14,11 @@ Run commands from repo root.
 - `nix fmt`: format all Nix files (uses `alejandra`, also run by `.githooks/pre-commit`).
 - `nix flake check`: evaluate flake outputs and basic checks.
 - `nix build .#certs`: build the custom package exposed by this flake.
-- `nix build .#nixosConfigurations.nixy-desktop.config.system.build.toplevel`: validate desktop system build.
-- `sudo nixos-rebuild switch --flake .#nixy-desktop` (or `.#nixy-laptop`): apply a host config.
+- `nix build .#nixosConfigurations.lucas.config.system.build.toplevel`: validate the active system build.
+- `sudo nixos-rebuild switch --flake .#lucas`: apply the active host config.
 
 ## Local Alias Workflow
-Preferred day-to-day rebuild commands are defined in `hosts/nixy-laptop/home.nix` and `hosts/nixy-desktop/home.nix`:
+Preferred day-to-day rebuild commands are defined in `hosts/lucas/home.nix`:
 - `fr`: `nh os switch --hostname ${host} /home/${username}/weasel-os` (rebuild current flake state).
 - `fu`: `nh os switch --hostname ${host} --update /home/${username}/weasel-os` (update inputs + rebuild).
 - `ncg`: run system/user garbage collection, then switch boot configuration.

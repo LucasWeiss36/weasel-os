@@ -12,7 +12,6 @@
   commonSystemPackages = with pkgs; [
     protonvpn-gui
     warp-terminal
-    code-cursor
     bun
     libreoffice-qt
     hunspell
@@ -21,7 +20,6 @@
     dotnetCorePackages.dotnet_9.sdk
     dotnetCorePackages.dotnet_9.runtime
     dotnetCorePackages.dotnet_9.aspnetcore
-    virtiofsd
     remmina
     thunderbird
     ouch
@@ -57,7 +55,6 @@
     obsidian
     vesktop
     vim
-    bubblewrap
     wget
     killall
     docker-compose
@@ -66,7 +63,6 @@
     cmatrix
     lolcat
     htop
-    libvirt
     lxqt.lxqt-policykit
     lm_sensors
     unzip
@@ -86,7 +82,6 @@
     meson
     ninja
     brightnessctl
-    virt-viewer
     swappy
     appimage-run
     networkmanagerapplet
@@ -245,7 +240,6 @@ in {
     fuse.userAllowOther = true;
     mtr.enable = true;
     gnupg.agent.enable = true;
-    virt-manager.enable = true;
     steam = {
       enable = true;
       remotePlay.openFirewall = true;
@@ -293,12 +287,12 @@ in {
       noto-fonts-cjk-sans
       font-awesome
       symbola
-    material-icons
-    monaspace
-    nerd-fonts.monaspace
-    adwaita-qt
-    adwaita-qt6
-  ];
+      material-icons
+      monaspace
+      nerd-fonts.monaspace
+      adwaita-qt
+      adwaita-qt6
+    ];
     enableDefaultPackages = true;
     fontconfig = {
       enable = true;
@@ -417,13 +411,7 @@ in {
     };
   };
 
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      qemu.swtpm.enable = true;
-    };
-    docker.enable = true;
-  };
+  virtualisation.docker.enable = true;
 
   console.keyMap = consoleKeyMap;
 

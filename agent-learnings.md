@@ -337,3 +337,27 @@ Append-only log of implementation lessons for future agents working in this repo
 - Change: Enabled `programs.nix-ld` in the shared system base and added `libcap`, `xz`, `openssl`, and `zlib` so Zed's managed `codex-acp` binary can start on both hosts.
 - Pitfall/Root cause: Zed launches the registry agent as a non-Nix Linux binary from `~/.local/share/zed/external_agents/codex/...`, which fails on NixOS without `nix-ld` or an equivalent wrapper.
 - Verification: `nix-instantiate --parse profiles/system/base.nix`, `nix eval --no-write-lock-file .#nixosConfigurations.nixy-laptop.config.system.build.toplevel.drvPath`, `nix eval --no-write-lock-file .#nixosConfigurations.nixy-desktop.config.system.build.toplevel.drvPath`
+
+### 2026-06-11 (virtualization cleanup)
+- Date: 2026-06-11
+- Change: Removed the shared libvirt/virt-manager stack, related viewer/SPICE helper packages, virt-manager dconf defaults, DMS launcher substitution, and `libvirtd` user-group memberships while keeping Docker enabled.
+- Pitfall/Root cause: Virt-manager was not just one GUI package; it also came from `programs.virt-manager`, `virtualisation.libvirtd`, common system packages, laptop SPICE packages, Home Manager dconf, and host user groups.
+- Verification: `jq empty programs/dank-material-shell/settings.json`, `rg -n "virt-manager|libvirtd|libvirt|virt-viewer|virtiofsd|spiceUSBRedirection|virtio-win|win-spice|spice-gtk|spice-protocol" hosts profiles programs modules`, `alejandra --check profiles/system/base.nix profiles/system/laptop.nix profiles/home/base.nix hosts/lucas/users.nix hosts/nixy-laptop/users.nix hosts/nixy-desktop/users.nix hosts/michapc/users.nix`, `git diff --check`, `nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath`, `nix eval --no-write-lock-file .#nixosConfigurations.nixy-laptop.config.system.build.toplevel.drvPath`, `nix eval --no-write-lock-file .#nixosConfigurations.nixy-desktop.config.system.build.toplevel.drvPath`, `nix eval --no-write-lock-file .#nixosConfigurations.michapc.config.system.build.toplevel.drvPath`, `nix eval --no-write-lock-file .#nixosConfigurations.michapc-debug.config.system.build.toplevel.drvPath`
+
+### 2026-06-11 (single-host flake cleanup)
+- Date: 2026-06-11
+- Change: Reduced the flake to the single active `lucas` host, deleted the unused `nixy-*` and `michapc*` host directories plus the dead desktop profiles, updated default host fallbacks in the dev shell and Neovim `nixd` config, and removed the now-unused `nixos-hardware` input from `flake.nix` and `flake.lock`.
+- Pitfall/Root cause: After removing the extra hosts, `lib/hosts.nix` no longer needed to be a function; `flake.nix` still imported it as one, which broke evaluation until the import call was simplified.
+- Verification: `rg -n "nixy-desktop|nixy-laptop|michapc|michapc-debug" flake.nix lib hosts profiles programs README.md AGENTS.md`, `alejandra --check flake.nix lib/hosts.nix profiles/system/laptop.nix programs/nvim/plugins/lsp.lua`, `git diff --check`, `nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath`, `nix flake lock`
+
+### 2026-06-11 (lucas host flattening)
+- Date: 2026-06-11
+- Change: Moved the remaining `profiles/system/laptop.nix` and `profiles/home/laptop.nix` contents directly into `hosts/lucas/config.nix` and `hosts/lucas/home.nix`, then deleted the now-misleading laptop profile files so the repo keeps only `base` profiles plus the single active host.
+- Pitfall/Root cause: Once the repo only targets one machine, keeping a `laptop` layer adds indirection without reuse; flattening it into the host preserves behavior while making ownership explicit.
+- Verification: `rg -n "profiles/system/laptop.nix|profiles/home/laptop.nix|home/laptop.nix|system/laptop.nix" README.md AGENTS.md docs flake.nix hosts profiles programs`, `alejandra --check hosts/lucas/config.nix hosts/lucas/home.nix`, `git diff --check`, `nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath`
+
+### 2026-06-11 (base profile deduplication)
+- Date: 2026-06-11
+- Change: Removed duplicate package declarations (`bubblewrap`, `obs-studio`, `code-cursor`), moved the clearly personal GUI/editor packages (`lmstudio`, `zed-editor`, `code-cursor`) and the VS Code Home Manager import from `profiles/home/base.nix` into `hosts/lucas/home.nix`, and kept the shared `base` profiles focused on common desktop/system behavior.
+- Pitfall/Root cause: After collapsing the repo to one host, the old layering still left personal apps in `base` and duplicated packages across system and user scopes, which made ownership blurry and upgrades harder to reason about.
+- Verification: `rg -n "code-cursor|bubblewrap|obs-studio|vscode\\.nix|lmstudio|zed-editor" hosts/lucas/config.nix hosts/lucas/home.nix profiles/system/base.nix profiles/home/base.nix`, `alejandra --check profiles/system/base.nix profiles/home/base.nix hosts/lucas/config.nix hosts/lucas/home.nix`, `git diff --check`, `nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath`

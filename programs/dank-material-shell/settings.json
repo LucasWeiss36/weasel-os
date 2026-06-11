@@ -189,11 +189,6 @@
       "type": "exact"
     },
     {
-      "pattern": "Virtual Machine Manager",
-      "replacement": "virt-manager",
-      "type": "exact"
-    },
-    {
       "pattern": "Handy",
       "replacement": "handy",
       "type": "exact"

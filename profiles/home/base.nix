@@ -52,10 +52,7 @@ in {
       pkgs.vanilla-dmz
       pkgs.volantes-cursors
       pkgs.kitty
-      pkgsUnstable.lmstudio
-      pkgsUnstable.zed-editor
-      pkgsUnstable.code-cursor
-   ];
+    ];
     sessionVariables = {
       WEASEL_OS_HOST = host;
       WEASEL_OS_ROOT = repoDefaultPath;
@@ -67,7 +64,7 @@ in {
     };
   };
 
-    imports = [
+  imports = [
     inputs.dms.homeModules."dank-material-shell"
     ../../programs/emoji.nix
     ../../programs/fastfetch
@@ -75,7 +72,6 @@ in {
     ../../programs/niri.nix
     ../../programs/neovim.nix
     ../../programs/terminal-stack.nix
-    ../../programs/vscode.nix
     ../../programs/rofi/rofi.nix
     ../../programs/rofi/config-emoji.nix
     ../../programs/rofi/config-long.nix
@@ -125,13 +121,13 @@ in {
   home.file = {
     ".config/gtk-3.0/gtk.css" = {
       text = ''
-      @import url("dank-colors.css");
+        @import url("dank-colors.css");
       '';
       force = true;
     };
     ".config/gtk-4.0/gtk.css" = {
       text = ''
-      @import url("dank-colors.css");
+        @import url("dank-colors.css");
       '';
       force = true;
     };
@@ -195,13 +191,6 @@ in {
     ln -sfn "${pkgs.volantes-cursors}/share/icons/volantes_cursors" "$HOME/.local/share/icons/volantes_cursors"
     ln -sfn "${pkgs.volantes-cursors}/share/icons/volantes_light_cursors" "$HOME/.local/share/icons/volantes_light_cursors"
   '';
-
-  dconf.settings = {
-    "org/virt-manager/virt-manager/connections" = {
-      autoconnect = ["qemu:///system"];
-      uris = ["qemu:///system"];
-    };
-  };
 
   gtk = {
     theme = {

@@ -1,11 +1,11 @@
 # WeaselOS
 
-WeaselOS is my personal NixOS flake for `nixy-laptop` and `nixy-desktop`.
-The current desktop stack is Niri plus Dank Material Shell (DMS), with shared system and Home Manager profiles layered underneath the host directories.
+WeaselOS is my personal NixOS flake for `lucas`.
+The current desktop stack is Niri plus Dank Material Shell (DMS), with shared system and Home Manager profiles layered underneath the host directory.
 
 This repo is optimized for three workflows:
 
-1. Rebuild my own laptop and desktop without host drift.
+1. Rebuild my current machine without host drift.
 2. Fork the repo and use it as a starting point for another machine.
 3. Keep host-specific facts separate from shared policy.
 
@@ -21,7 +21,6 @@ This repo is optimized for three workflows:
 
 ## Current Assumptions
 
-- Hosts are named `nixy-*`.
 - The preferred clone location is `~/weasel-os`.
 - `programs/niri/` owns `config.kdl` and `base/*.kdl`.
 - `programs/niri/dms/*.kdl` owns the stable DMS defaults and is linked into `~/.config/niri/dms/*.kdl` as out-of-store symlinks.
@@ -50,7 +49,7 @@ cd ~/weasel-os
 5. Create a new host folder by copying one of the existing hosts:
 
 ```bash
-cp -r hosts/nixy-laptop hosts/<your-host>
+cp -r hosts/lucas hosts/<your-host>
 ```
 
 6. Generate fresh hardware config on the target machine:
@@ -91,7 +90,7 @@ That first switch is the important bootstrap step. After it completes, Home Mana
 2. Copy an existing host folder:
 
 ```bash
-cp -r hosts/nixy-laptop hosts/<your-host>
+cp -r hosts/lucas hosts/<your-host>
 ```
 
 3. Replace `hosts/<your-host>/hardware.nix` with the hardware config from your machine.
@@ -148,8 +147,7 @@ Useful evaluation commands from repo root:
 ```bash
 nix fmt
 nix flake check
-nix eval --no-write-lock-file .#nixosConfigurations.nixy-laptop.config.system.build.toplevel.drvPath
-nix eval --no-write-lock-file .#nixosConfigurations.nixy-desktop.config.system.build.toplevel.drvPath
+nix eval --no-write-lock-file .#nixosConfigurations.lucas.config.system.build.toplevel.drvPath
 ```
 
 ## Status

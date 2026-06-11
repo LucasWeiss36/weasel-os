@@ -2,13 +2,10 @@
   pkgs,
   username,
   ...
-}:
-
-let
+}: let
   inherit (import ./variables.nix) gitUsername;
-in
-{
-  users.groups.llama = { };
+in {
+  users.groups.llama = {};
   users.users = {
     "${username}" = {
       homeMode = "755";
@@ -17,7 +14,6 @@ in
       extraGroups = [
         "networkmanager"
         "wheel"
-        "libvirtd"
         "scanner"
         "lp"
         "docker"

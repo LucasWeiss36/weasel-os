@@ -9,7 +9,7 @@ end
 
 local host_name = vim.env.WEASEL_OS_HOST
 if host_name == nil or host_name == "" then
-  host_name = "nixy-laptop"
+  host_name = "lucas"
 end
 
 vim.diagnostic.config({

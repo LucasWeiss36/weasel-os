@@ -8,7 +8,6 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     fine-cmdline = {
       url = "github:VonHeikemen/fine-cmdline.nvim";
       flake = false;
@@ -54,7 +53,7 @@
 
     pkgsStable = mkPkgs nixpkgs;
     pkgsUnstable = mkPkgs nixpkgs-unstable;
-    hosts = import ./lib/hosts.nix {inherit inputs;};
+    hosts = import ./lib/hosts.nix;
     mkHost = import ./lib/mk-host.nix {
       inherit
         home-manager
@@ -195,7 +194,7 @@
 
     devBashRc = pkgsUnstable.writeText "weasel-dev-bashrc" ''
       export WEASEL_OS_ROOT="''${WEASEL_OS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
-      export WEASEL_OS_HOST="''${WEASEL_OS_HOST:-''${HOSTNAME:-nixy-laptop}}"
+      export WEASEL_OS_HOST="''${WEASEL_OS_HOST:-''${HOSTNAME:-lucas}}"
       export STARSHIP_CONFIG=${devStarshipConfig}
       export ZDOTDIR=${devZshDotDir}
 
@@ -239,7 +238,7 @@
       runtimeInputs = devPackages;
       text = ''
         export WEASEL_OS_ROOT="''${WEASEL_OS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
-        export WEASEL_OS_HOST="''${WEASEL_OS_HOST:-''${HOSTNAME:-nixy-laptop}}"
+        export WEASEL_OS_HOST="''${WEASEL_OS_HOST:-''${HOSTNAME:-lucas}}"
         export STARSHIP_CONFIG=${devStarshipConfig}
         export ZDOTDIR=${devZshDotDir}
         exec ${pkgsUnstable.bashInteractive}/bin/bash --noprofile --rcfile ${devBashRc} -i
@@ -250,7 +249,7 @@
       packages = devPackages;
       shellHook = ''
         export WEASEL_OS_ROOT="''${WEASEL_OS_ROOT:-$(git rev-parse --show-toplevel 2>/dev/null || pwd)}"
-        export WEASEL_OS_HOST="''${WEASEL_OS_HOST:-''${HOSTNAME:-nixy-laptop}}"
+        export WEASEL_OS_HOST="''${WEASEL_OS_HOST:-''${HOSTNAME:-lucas}}"
         export STARSHIP_CONFIG=${devStarshipConfig}
         export ZDOTDIR=${devZshDotDir}
         source ${devBashRc}
