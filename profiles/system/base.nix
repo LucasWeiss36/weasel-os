@@ -10,29 +10,15 @@
 }: let
   inherit (import ../../hosts/${host}/variables.nix) consoleKeyMap keyboardLayout;
   commonSystemPackages = with pkgs; [
-    protonvpn-gui
-    warp-terminal
     bun
     libreoffice-qt
     hunspell
     hunspellDicts.en_US
     hunspellDicts.de_DE
-    dotnetCorePackages.dotnet_9.sdk
-    dotnetCorePackages.dotnet_9.runtime
-    dotnetCorePackages.dotnet_9.aspnetcore
     remmina
     thunderbird
     ouch
-    razergenie
-    wineWowPackages.staging
-    winetricks
     sl
-    dxvk_2
-    vkd3d-proton
-    keymapp
-    wally-cli
-    alarm-clock-applet
-    alacritty
     google-chrome
     zellij
     yazi
@@ -45,12 +31,8 @@
     jq
     p7zip-rar
     ffmpeg
-    bottles
-    lutris
-    heroic
     protonup-ng
     mangohud
-    qbittorrent
     meld
     obsidian
     vesktop
@@ -68,7 +50,6 @@
     unzip
     unrar
     libnotify
-    v4l-utils
     ydotool
     duf
     ncdu
@@ -78,9 +59,6 @@
     cowsay
     lshw
     bat
-    pkg-config
-    meson
-    ninja
     brightnessctl
     swappy
     appimage-run
@@ -275,9 +253,6 @@ in {
     systemPackages = commonSystemPackages;
     variables = {
       STEAM_EXTRA_COMPAT_TOOLS_PATHS = "/home/${username}/.steam/root/compatibilitytools.d";
-    };
-    sessionVariables = {
-      DOTNET_ROOT = "${pkgs.dotnetCorePackages.dotnet_9.sdk}";
     };
   };
 

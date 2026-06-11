@@ -35,13 +35,8 @@
 
   environment.systemPackages =
     (with pkgs; [
-      claude-code
       openssl
       proton-pass
-      azuredatastudio
-      teams-for-linux
-      slack
-      protonmail-desktop
       python3
       python3Packages.pip
       snapper
@@ -54,22 +49,12 @@
       lsfg-vk
       lsfg-vk-ui
       superTuxKart
-      prismlauncher
-      ftb-app
+      bambu-studio
       firefox
       ventoy-full-qt
-      antigravity-fhs
-      kontroll
-      protontricks
-      mangojuice
     ])
     ++ [
       pkgsUnstable.nodejs
-      pkgsUnstable.dgop
-      pkgsUnstable.dsearch
-      inputs.helium.packages.${pkgs.stdenv.hostPlatform.system}.default
-      inputs.self.packages.${pkgs.stdenv.hostPlatform.system}.t3code
-      inputs.handy.packages.${pkgs.stdenv.hostPlatform.system}.handy
     ];
 
   services = {
